@@ -12,3 +12,4 @@ public interface Model {
 
   public Set<District> getDistricts();
 }
+
