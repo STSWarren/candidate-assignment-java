@@ -1,58 +1,74 @@
 package ch.aaap.assignment.model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import ch.aaap.assignment.raw.CSVPoliticalCommunity;
 
 public class PoliticalCommunityObject implements PoliticalCommunity{
-    private String number;
-    private String name;
-    private String shortName;
-    private LocalDate lastUpdate;
-    private Map<String, Set<String>> postalCommunityZipCodesAndAdditions;
+  private String number;
+  private String name;
+  private String shortName;
+  private LocalDate lastUpdate;
+  private List<ZipAndAdditionsContainer> postalCommunityZipCodesAndAdditions;
   
-    public PoliticalCommunityObject( String givenNumber, String givenName, String givenShortName, LocalDate givenLastUpdate, Map<String, Set<String>> givenPostalCommunities ){
-      number = givenNumber;
-      name = givenName;
-      shortName = givenShortName;
-      lastUpdate = givenLastUpdate;
-      postalCommunityZipCodesAndAdditions = givenPostalCommunities;
-    }
+  public PoliticalCommunityObject( CSVPoliticalCommunity csvPoliticalCommunity ){
+    number = csvPoliticalCommunity.getNumber();
+    name = csvPoliticalCommunity.getName();
+    shortName = csvPoliticalCommunity.getShortName();
+    lastUpdate = csvPoliticalCommunity.getLastUpdate();
+    postalCommunityZipCodesAndAdditions = new ArrayList<>();  
+  }
   
-    public String getNumber(){
-      return number;
-    }
+  public String getNumber(){
+    return number;
+  }
   
-    public String getName(){
-      return name;
-    }
+  public String getName(){
+    return name;
+  }
   
-    public String getShortName(){
-      return shortName;
-    }
+  public String getShortName(){
+    return shortName;
+  }
   
-    public LocalDate getLastUpdate(){
-      return lastUpdate;
-    }
+  public LocalDate getLastUpdate(){
+    return lastUpdate;
+  }
   
-    public Map<String, Set<String>> getPostalCommunities(){
-      return postalCommunityZipCodesAndAdditions;
-    }
+  public List<ZipAndAdditionsContainer> getPostalCommunities(){
+    return postalCommunityZipCodesAndAdditions;
+  }
   
-    public void addNewPostalCommunity( String zip, String zipCodeAddition ){
-      if( postalCommunityZipCodesAndAdditions.containsKey(zip) ){
-        Set<String> zipCodeAdditions = postalCommunityZipCodesAndAdditions.get(zip);
-        zipCodeAdditions.add(zipCodeAddition);
-        postalCommunityZipCodesAndAdditions.replace(zip, zipCodeAdditions);
-      }else{
-        Set<String> zipCodeAdditions = new HashSet<>();
-        zipCodeAdditions.add( zipCodeAddition );
-        postalCommunityZipCodesAndAdditions.put( zip, zipCodeAdditions );
-      }
+  public void addNewPostalCommunity( String zip, String zipCodeAddition ){
+    ZipAndAdditionsContainer newContainer = new ZipAndAdditionsContainerObject( zip );
+    
+    if( postalCommunityZipCodesAndAdditions.contains( newContainer ) ){
+      newContainer = postalCommunityZipCodesAndAdditions.get( postalCommunityZipCodesAndAdditions.indexOf(postalCommunityZipCodesAndAdditions.get( 0 ) ) );
+      postalCommunityZipCodesAndAdditions.remove( newContainer );
+
+      newContainer.addZipAddition( zipCodeAddition );
     }
+
+    postalCommunityZipCodesAndAdditions.add( newContainer );
+  }
+
+  @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof PoliticalCommunityObject)) {
+            return false;
+        }
+        PoliticalCommunityObject politicalCommunityObject = (PoliticalCommunityObject) o;
+        return Objects.equals(number, politicalCommunityObject.number) && Objects.equals(name, politicalCommunityObject.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(number, name);
+  }
   
-    public boolean isEqualTo( PoliticalCommunity other ){
-      return this.getNumber().equals( other.getNumber() );
-    }
 }  

@@ -1,8 +1,7 @@
 package ch.aaap.assignment.model;
 
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 public interface PoliticalCommunity {
 
@@ -14,7 +13,7 @@ public interface PoliticalCommunity {
 
   public LocalDate getLastUpdate();
 
-  public Map<String, Set<String>> getPostalCommunities();
+  public List<ZipAndAdditionsContainer> getPostalCommunities();
 
   /**
    * @param zip the zip of a postal community object associated with this political community to act as a key in the 
@@ -23,11 +22,4 @@ public interface PoliticalCommunity {
    * to act as the value in the postal communities map.
    */
   public void addNewPostalCommunity( String zip, String zipCodeAddition  );
-
-  /**
-   * @param other a political community object other than the one given to check if it has 
-   * the same number.
-   * @return a boolean indicating whether the conditions under which they would be considered equal have been met.
-   */
-  public boolean isEqualTo( PoliticalCommunity other );
 }

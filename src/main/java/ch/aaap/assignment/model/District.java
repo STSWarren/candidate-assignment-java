@@ -15,11 +15,4 @@ public interface District {
    * within with this district.
    */
   public void addNewPoliticalCommunityNumber( String newPoliticalCommunityNumber );
-
-  /**
-   * @param other a district object other than the one given to check if it has 
-   * the same number.
-   * @return a boolean indicating whether the conditions under which they would be considered equal have been met.
-   */
-  public boolean isEqualTo( District other );
 }
