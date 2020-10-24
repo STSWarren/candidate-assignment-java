@@ -35,8 +35,9 @@ public class CantonObject implements Canton{
 
   @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
+        if (o == this){
+          return true;
+        }
         if (!(o instanceof CantonObject)) {
             return false;
         }

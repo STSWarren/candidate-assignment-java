@@ -49,24 +49,23 @@ public class Application {
     long total = 0;
     List<Long> politicalCommunitiesInDistricts = new ArrayList<>();
     
-    List<Canton> cantonMatchList = model
-      .getCantons().stream().filter( canton -> 
-        canton.getCode().equals( cantonCode ) )
-          .collect(Collectors.toList() );
+    List<Canton> cantonMatchList = model.getCantons().stream().filter( canton -> 
+        canton.getCode().equals( cantonCode ) ).collect( Collectors.toList() );
 
     if(cantonMatchList.isEmpty()){
       throw new IllegalArgumentException("No canton with that code exists.");
     }
 
     if( cantonMatchList.size() < 2){
-      cantonMatchList.get(0)
-        .getDistrictCodesInCanton().stream()
-          .forEach( districtNumber -> politicalCommunitiesInDistricts
-                .add( getAmountOfPoliticalCommunitiesInDistrict( districtNumber ) )
-          );
+
+      cantonMatchList.get(0).getDistrictCodesInCanton().stream().forEach( districtNumber -> 
+        politicalCommunitiesInDistricts.add( getAmountOfPoliticalCommunitiesInDistrict( 
+          districtNumber ) ) );
+
     }
     
-    total = politicalCommunitiesInDistricts.stream().collect(Collectors.summingLong(Long::longValue));
+    total = politicalCommunitiesInDistricts.stream().collect( 
+      Collectors.summingLong( Long::longValue ) );
 
     return total;
   }
@@ -78,8 +77,8 @@ public class Application {
   public long getAmountOfDistrictsInCanton( String cantonCode ) {
     List<Canton> cantonMatchList = 
       model.getCantons().stream()
-      .filter( canton -> canton.getCode().equals( cantonCode ) )
-        .collect(Collectors.toList() );
+      .filter( canton -> 
+        canton.getCode().equals( cantonCode ) ).collect(Collectors.toList() );
 
     if( cantonMatchList.isEmpty() ){
       throw new IllegalArgumentException("No canton with that code exists.");
@@ -94,10 +93,8 @@ public class Application {
    */
   public long getAmountOfPoliticalCommunitiesInDistrict( String districtNumber ) {
     List<District> districtMatchList = 
-      model.getDistricts().stream()
-        .filter( district -> district
-          .getNumber().equals( districtNumber ) )
-            .collect( Collectors.toList() );
+      model.getDistricts().stream().filter( district -> 
+          district.getNumber().equals( districtNumber ) ).collect( Collectors.toList() );
 
     if( districtMatchList.isEmpty() ){
       throw new IllegalArgumentException("No district with that number exists.");
@@ -112,9 +109,8 @@ public class Application {
    */
   public Set<String> getDistrictsForZipCode( String zipCode ) {
     List<PostalCommunity> postalCommunitiesMatchList = 
-      model.getPostalCommunities().stream()
-        .filter(postalCommunity -> postalCommunity.getZipCode().equals( zipCode ) )
-          .collect(Collectors.toList());
+      model.getPostalCommunities().stream().filter(postalCommunity -> 
+        postalCommunity.getZipCode().equals( zipCode ) ).collect(Collectors.toList());
 
     List<String> politicalCommunityNumbers = new ArrayList<>();
     postalCommunitiesMatchList.stream().forEach( postalCommunity -> 
@@ -125,8 +121,9 @@ public class Application {
 
     model.getDistricts().stream().forEach( district ->{
 
-      if(district.getPoliticalCommunityNumbersInDistrict().stream().anyMatch( politicalCommunityNumbersSet::contains )){
-        districts.add( district.getName() );
+      if(district.getPoliticalCommunityNumbersInDistrict().stream()
+        .anyMatch( politicalCommunityNumbersSet::contains )){
+          districts.add( district.getName() );
       }
 
     } );
@@ -142,30 +139,34 @@ public class Application {
       String postalCommunityName ) {
     LocalDate lastUpdateOfPoliticalCommunity = LocalDate.now();
     List<PostalCommunity> postalCommunityMatchList = 
-      model.getPostalCommunities().stream()
-        .filter( postalCommunity -> postalCommunity.getName()
-          .equals( postalCommunityName )).collect( Collectors.toList() );
+      model.getPostalCommunities().stream().filter( postalCommunity -> 
+        postalCommunity.getName().equals( postalCommunityName )).collect( Collectors.toList() );
 
     if( postalCommunityMatchList.isEmpty() ){
       throw new IllegalArgumentException("No postal community with that name exists.");
     }
 
     if( postalCommunityMatchList.size() > 1){
-      throw new IllegalArgumentException("Postal community with that name does not resolve to a single postal community.");
+      throw new IllegalArgumentException(
+        "Postal community with that name does not resolve to a single postal community.");
     }
 
     PostalCommunity postalCommunity = postalCommunityMatchList.get(0);
     if( postalCommunity.getPoliticalCommunities().size() > 1){
-      throw new IllegalArgumentException("Postal community with that name is linked to multiple political communities.");
+      throw new IllegalArgumentException(
+        "Postal community with that name is linked to multiple political communities.");
     }
 
     if( postalCommunity.getPoliticalCommunities().isEmpty() ){
-      throw new IllegalArgumentException("Postal community with that name is linked to no political communities.");
+      throw new IllegalArgumentException(
+        "Postal community with that name is linked to no political communities.");
     }
 
     String politicalCommunityNumber = postalCommunity.getPoliticalCommunities().iterator().next();
-    List<PoliticalCommunity> politicalCommunitiesMatchList = model.getPoliticalCommunities().stream()
-      .filter( politicalCommunity -> politicalCommunity.getNumber().equals( politicalCommunityNumber ) )
+
+    List<PoliticalCommunity> politicalCommunitiesMatchList = 
+      model.getPoliticalCommunities().stream().filter( politicalCommunity -> 
+        politicalCommunity.getNumber().equals( politicalCommunityNumber ) )
           .collect(Collectors.toList() );
 
     if( !politicalCommunitiesMatchList.isEmpty() ){

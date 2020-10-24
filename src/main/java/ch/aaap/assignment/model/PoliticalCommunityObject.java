@@ -46,7 +46,11 @@ public class PoliticalCommunityObject implements PoliticalCommunity{
     ZipAndAdditionsContainer newContainer = new ZipAndAdditionsContainerObject( zip );
     
     if( postalCommunityZipCodesAndAdditions.contains( newContainer ) ){
-      newContainer = postalCommunityZipCodesAndAdditions.get( postalCommunityZipCodesAndAdditions.indexOf(postalCommunityZipCodesAndAdditions.get( 0 ) ) );
+
+      newContainer = postalCommunityZipCodesAndAdditions.get( 
+        postalCommunityZipCodesAndAdditions.indexOf(
+          postalCommunityZipCodesAndAdditions.get( 0 ) ) );
+
       postalCommunityZipCodesAndAdditions.remove( newContainer );
 
       newContainer.addZipAddition( zipCodeAddition );
@@ -57,13 +61,16 @@ public class PoliticalCommunityObject implements PoliticalCommunity{
 
   @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
+        if (o == this){
+          return true;
+        }
         if (!(o instanceof PoliticalCommunityObject)) {
             return false;
         }
         PoliticalCommunityObject politicalCommunityObject = (PoliticalCommunityObject) o;
-        return Objects.equals(number, politicalCommunityObject.number) && Objects.equals(name, politicalCommunityObject.name);
+
+        return Objects.equals(number, politicalCommunityObject.number) 
+          && Objects.equals(name, politicalCommunityObject.name);
   }
 
   @Override

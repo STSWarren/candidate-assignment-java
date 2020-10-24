@@ -35,13 +35,15 @@ public class DistrictObject implements District{
 
   @Override
     public boolean equals(Object o) {
-        if (o == this)
+        if (o == this){
             return true;
+        }
         if (!(o instanceof DistrictObject)) {
             return false;
         }
         DistrictObject districtObject = (DistrictObject) o;
-        return Objects.equals(number, districtObject.number) && Objects.equals(name, districtObject.name);
+        return Objects.equals(number, districtObject.number) 
+            && Objects.equals(name, districtObject.name);
   }
 
   @Override

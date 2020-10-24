@@ -43,13 +43,17 @@ public class PostalCommunityObject implements PostalCommunity {
 
   @Override
   public boolean equals(Object o) {
-    if (o == this)
+    if (o == this){
       return true;
+    }
     if (!(o instanceof PostalCommunityObject)) {
       return false;
     }
     PostalCommunityObject postalCommunityObject = (PostalCommunityObject) o;
-    return Objects.equals(zipCode, postalCommunityObject.zipCode) && Objects.equals(zipCodeAddition, postalCommunityObject.zipCodeAddition) && Objects.equals(name, postalCommunityObject.name);
+
+    return Objects.equals(zipCode, postalCommunityObject.zipCode) 
+      && Objects.equals(zipCodeAddition, postalCommunityObject.zipCodeAddition) 
+        && Objects.equals(name, postalCommunityObject.name);
   }
 
   @Override
