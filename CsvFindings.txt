@@ -1,0 +1,11 @@
+Multiple Postal communities are linked to multiple political communities and vice versa. 
+
+The zip and zip addition are the compound key for a postal community.
+
+The short name and long name of the Political communities are the exact same in the GDE csv.
+
+Many different postal communities share the same name, including Lausanne, who is, surprisingly, in the political community Lausanne. But only 10% of this Lausanne is in Lausanne.
+
+Unless “%_IN_GDE” means something else, some political communities must slightly overlap. In the case of Bercher, it is 100% in Bercher but also 0.76% in Boulens and 0.21% Montanaire
+
+The numbering of political communities has gaps. Eg there is no political district 15. This may also be a relic of the history of Switzerland as political communities change and merge, change district, or canton etc. as borders change internally.
