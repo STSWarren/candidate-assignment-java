@@ -47,9 +47,9 @@ public class PoliticalCommunityObject implements PoliticalCommunity{
     
     if( postalCommunityZipCodesAndAdditions.contains( newContainer ) ){
 
-      newContainer = postalCommunityZipCodesAndAdditions.get( 
-        postalCommunityZipCodesAndAdditions.indexOf(
-          postalCommunityZipCodesAndAdditions.get( 0 ) ) );
+      newContainer = 
+        postalCommunityZipCodesAndAdditions.get( postalCommunityZipCodesAndAdditions
+          .indexOf( postalCommunityZipCodesAndAdditions.get( 0 ) ) );
 
       postalCommunityZipCodesAndAdditions.remove( newContainer );
 
